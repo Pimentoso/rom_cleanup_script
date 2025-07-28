@@ -2,6 +2,9 @@
 
 # Usage: ruby rom_cleanup.rb [directory] [.extension]
 # Example: ruby rom_cleanup.rb /path/to/roms .zip
+#
+# Useful links:
+# - https://www.tosecdev.org/tosec-naming-convention
 
 require "logger"
 

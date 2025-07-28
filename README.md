@@ -11,7 +11,15 @@ ruby rom_cleanup.rb [directory] [.extension]
 
 This is the flow I usually use.
 
-- Download a rom folder from myrient or other sources using `wget -m -np -c -e robots=off -R "index.html*" https://myrient.erista.me/files/TOSEC/...`
+- Download a rom folder from myrient or other sources, using a wget script that does a bit of pre-filtering
+
+```bash
+wget -m -np -c -e robots=off \
+  --reject "*[cr*","*[f*","*[h*","*[m*","*[t*","*[tr*","*[o*","*[u*","*[v*","*[b*" \
+  -R "index.html*" \
+  https://myrient.erista.me/files/TOSEC/Sega/Mark%20III%20%26%20Master%20System/Games/
+```
+
 - Move all the roms to a reasonably named folder
 - Run the script using `ruby rom_cleanup.rb /path/to/roms .zip`. The script will remove unwanted ROMs using this criteria
   - ROMs with bad tags 
