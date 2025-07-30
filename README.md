@@ -1,5 +1,5 @@
 # ROM Cleanup Script
-Ruby script to cleanup bad/unwanted ROMs, mainly from TOSEC dumps.
+Ruby script to cleanup bad/unwanted ROMs, mainly from TOSEC and No-Intro dumps.
 
 ## How to use
 
@@ -14,8 +14,15 @@ This is the flow I usually use.
 - Download a rom folder from myrient or other sources, using a wget script that does a bit of pre-filtering
 
 ```bash
+# for TOSEC
 wget -m -np -c -e robots=off \
   --reject "*[cr*","*[f*","*[h*","*[m*","*[t*","*[tr*","*[o*","*[u*","*[v*","*[b*" \
+  -R "index.html*" \
+  https://myrient.erista.me/files/TOSEC/Sega/Mark%20III%20%26%20Master%20System/Games/
+
+# for No-Intro
+wget -m -np -c -e robots=off \
+  --reject "*(Beta)*","*(Proto)*","*(Sample)*" \
   -R "index.html*" \
   https://myrient.erista.me/files/TOSEC/Sega/Mark%20III%20%26%20Master%20System/Games/
 ```
