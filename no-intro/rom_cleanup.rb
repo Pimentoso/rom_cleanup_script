@@ -43,7 +43,7 @@ DEV_STATUS = [
   "Proto",
   "Sample",
   "Demo",
-  "Pirate"
+  "Pirate",
   "Unl"
 ]
 

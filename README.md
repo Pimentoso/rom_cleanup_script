@@ -34,6 +34,6 @@ wget -m -np -c -e robots=off \
   - ROMs in alpha/beta/prototype state
   - ROMs with multiple alternate versions (namely [a] tags) - it will only keep the one with the highest number
   - Then, it will prompt the user for any ROM with multiple region versions (usually EU or US), and the user has to choose which one to keep. I usually keep the US version
-- Manually go through the game directory to see if the script missed something and still have some duplicates
+- Manually go through the game directory to see if the script missed something and still have some duplicates, or tags you want to get rid of
 - Run Retropie or any retrgaming platform you are using, and use the scraper function to get the game metadata. Then manually go through the games and check again if there are duplicate games: some games have a different name between EU and US so scraping the titles should reveal those.
 - Enjoy your curated list of ROMs!
