@@ -24,7 +24,7 @@ DUMP_INFO_FLAGS = [
   "f",
   "h",
   "m",
-  # "p",
+  "p",
   "t",
   "tr ",
   "o",
@@ -34,7 +34,7 @@ DUMP_INFO_FLAGS = [
   "a " # weird alternate versions
 ]
 
-COUNTRIES = %w[DE FR ES IT SE BR RU AU CA JP TW KR CN AS JP-KR]
+COUNTRIES = %w[DE FR ES IT SE BR NL RU AU CA JP TW KR CN AS JP-KR]
 
 DEV_STATUS = [
   "alpha",

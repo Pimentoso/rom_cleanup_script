@@ -35,7 +35,10 @@ COUNTRIES = [
   "Netherlands",
   "Spain",
   "Sweden",
-  "Asia"
+  "Denmark",
+  "Norway",
+  "Asia",
+  "Taiwan"
 ]
 
 DEV_STATUS = [
@@ -46,6 +49,8 @@ DEV_STATUS = [
   "Pirate",
   "Unl"
 ]
+
+REGION_PRIORITY = "USA"
 
 if DRY_RUN
   logger.info { "##############################################" }
@@ -89,48 +94,37 @@ files.each do |file|
 end
 
 logger.info { "Done." }
-# logger.info { "################ REMOVING ROMS WITH MULTIPLE REVISIONS (user input required) ################" }
+logger.info { "################ REMOVING ROMS BY REGION PRIORITY ################" }
 
-# base_names = Dir.glob(File.join(directory, "*#{extension}")).select{ |f| f.include?("Rev ") }.map { |f| File.basename(f, extension).split("Rev ").first.strip }.uniq
+base_names = Dir.glob(File.join(directory, "*#{extension}")).sort.map { |f| File.basename(f, extension).split("(").first.strip }.uniq
 
-# base_names.each do |file|
-#   matches = [Dir.glob(File.join(directory, "#{file} Rev *")), Dir.glob(File.join(directory, "#{file} ("))].flatten.sort
-#   if matches.size == 1
-#     file_to_keep = matches[0]
-#     new_filename = File.join(directory, "#{file} #{file_to_keep[file_to_keep.index('(')..]}")
-#     logger.debug { "renaming #{file_to_keep} to #{new_filename}" }
-#     File.rename(file_to_keep, new_filename) unless DRY_RUN
+base_names.each do |file|
+  basename = "#{file} ("
+  matches = Dir.glob(File.join(directory, "#{basename}*#{extension}")).sort
+  next if matches.empty?
 
-#     next
-#   end
+  region_matches = matches.select do |match|
+    tags = File.basename(match, extension).scan(/\(([^)]+)\)/)
+    tags.any? && tags.first.first == REGION_PRIORITY
+  end
 
-#   logger.info { "Multiple versions found for: #{file}" }
-#   matches.each_with_index do |match, index|
-#     logger.info { "#{index + 1}. #{File.basename(match)}" }
-#   end
+  if region_matches.any?
+    logger.info { "Region priority '#{REGION_PRIORITY}' found for: #{file}" }
+    region_matches.each { |rm| logger.info { "Keeping: #{File.basename(rm)}" } }
+    matches.each do |match|
+      unless region_matches.include?(match)
+        logger.debug { "deleting: #{match}" }
+        File.delete(match) unless DRY_RUN
+      end
+    end
+  else
+    logger.info { "No region priority '#{REGION_PRIORITY}' found for: #{file}, keeping all." }
+  end
+  logger.info { "################" }
+end
 
-#   logger.info { "Enter number to keep (1-#{matches.size}): " }
-#   selection = STDIN.gets.chomp.to_i
+logger.info { "Done." }
 
-#   if selection.between?(1, matches.size)
-#     file_to_keep = matches[selection - 1]
-#     matches.each do |match|
-#       if match != file_to_keep
-#         logger.debug { "deleting: #{match}" }
-#         File.delete(match) unless DRY_RUN
-#       end
-#     end
-#     new_filename = File.join(directory, "#{file} #{file_to_keep[file_to_keep.index('(')..]}")
-#     logger.debug { "renaming #{file_to_keep} to #{new_filename}" }
-#     File.rename(file_to_keep, new_filename) unless DRY_RUN
-#   else
-#     logger.info { "Invalid selection, skipping..." }
-#   end
-
-#   logger.info { "################" }
-# end
-
-# logger.info { "Done." }
 logger.info { "################ REMOVING ROMS WITH MULTIPLE REGIONS (user input required) ################" }
 
 base_names = Dir.glob(File.join(directory, "*#{extension}")).sort.map { |f| File.basename(f, extension).split("(").first.strip }.uniq

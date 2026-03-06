@@ -18,13 +18,15 @@ This is the flow I usually use.
 wget -m -np -c -e robots=off \
   --reject "*[cr*","*[f*","*[h*","*[m*","*[t*","*[tr*","*[o*","*[u*","*[v*","*[b*" \
   -R "index.html*" \
+  --retry-connrefused --read-timeout=20 --timeout=15 \
   https://myrient.erista.me/files/TOSEC/Sega/Mark%20III%20%26%20Master%20System/Games/
 
 # for No-Intro
 wget -m -np -c -e robots=off \
-  --reject "*(Beta)*","*(Proto)*","*(Sample)*" \
+  --reject "*(Beta)*","*(Proto)*","*(Sample)*","*(Japan)*" \
   -R "index.html*" \
-  https://myrient.erista.me/files/TOSEC/Sega/Mark%20III%20%26%20Master%20System/Games/
+  --retry-connrefused --read-timeout=20 --timeout=15 \
+  https://myrient.erista.me/files/No-Intro/Nintendo%20-%20Nintendo%20DS%20%28Decrypted%29/
 ```
 
 - Move all the roms to a reasonably named folder
